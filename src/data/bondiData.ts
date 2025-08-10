@@ -1,74 +1,68 @@
-// src/data/bondiData.ts
-import { Coins, CheckCircle, Repeat, BarChart } from 'lucide-react';
-
+// Updated with more comprehensive data
 export const navLinks = [
   { href: "#features", label: "Features" },
   { href: "#how-it-works", label: "How It Works" },
+  { href: "#stats", label: "Stats" },
   { href: "#testimonials", label: "Testimonials" },
+  { href: "#faq", label: "FAQ" },
 ];
 
 export const hero = {
-  headline: "Simplify Shared Living.",
-  subheadline: "Split bills, chores, and subscriptions effortlessly with Bondi, the friendly and transparent ledger for groups.",
+  headline: "Simplify Shared Living",
+  subheadline: "The decentralized solution for roommates, families, and friends to manage shared expenses and responsibilities",
   cta1: "Get Started Free",
   cta2: "See Demo",
 };
 
 export const features = [
   {
-    icon: Coins,
+    icon: "📝",
+    title: "Shared Ledger",
+    description: "Create transparent, immutable records of all shared expenses and responsibilities"
+  },
+  {
+    icon: "💰",
     title: "Expense Tracking",
-    description: "Log shared expenses in real-time, so everyone knows who paid for what.",
+    description: "Log shared expenses with automatic calculations of who owes what"
   },
   {
-    icon: CheckCircle,
-    title: "Chore Accountability",
-    description: "Create and assign tasks to keep your shared space clean and organized.",
+    icon: "🧹",
+    title: "Chore Management",
+    description: "Assign and track household responsibilities with automated reminders"
   },
   {
-    icon: Repeat,
+    icon: "🔄",
     title: "Subscription Sharing",
-    description: "Manage recurring payments for services like Netflix and Spotify with ease.",
-  },
-  {
-    icon: BarChart,
-    title: "Transparent Ledger",
-    description: "A clear and immutable record of all transactions ensures fairness and trust.",
-  },
+    description: "Manage recurring payments and split costs fairly between members"
+  }
 ];
 
 export const howItWorks = [
   {
-    step: 1,
     title: "Create Your Group",
-    description: "Invite your friends, roommates, or family to join your Bondi group.",
+    description: "Set up your shared space in seconds with our intuitive interface"
   },
   {
-    step: 2,
     title: "Add Expenses & Tasks",
-    description: "Log bills, chores, and subscriptions as they come up. It’s quick and easy.",
+    description: "Log bills, chores, and subscriptions as they come up"
   },
   {
-    step: 3,
-    title: "Settle Up Seamlessly",
-    description: "Bondi calculates who owes what, making settlements simple and fair.",
-  },
+    title: "Automated Settlements",
+    description: "Bondi calculates who owes what and automates payment reminders"
+  }
 ];
 
 export const testimonials = [
   {
-    quote: "Bondi has been a game-changer for our apartment. No more awkward conversations about bills!",
-    name: "Sarah L.",
-    avatar: "/avatars/sarah.png", // We will use placeholder avatars for now
+    quote: "Bondi saved our friendship! No more awkward money conversations.",
+    name: "Sarah K.",
   },
   {
-    quote: "Finally, a fair way to manage subscriptions with my friends. The transparency is amazing.",
-    name: "Michael B.",
-    avatar: "/avatars/michael.png",
+    quote: "As students, Bondi made sharing expenses so simple. Highly recommend!",
+    name: "Mike T.",
   },
   {
-    quote: "As a student, splitting expenses can be tough. Bondi makes it incredibly simple and stress-free.",
-    name: "Jessica P.",
-    avatar: "/avatars/jessica.png",
-  },
+    quote: "Finally, a fair way to manage subscriptions with roommates.",
+    name: "Jessica L.",
+  }
 ];

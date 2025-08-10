@@ -8,17 +8,38 @@ const config = {
   theme: {
     extend: {
       colors: {
-        'primary-green': '#10B981', // A modern, vibrant green
-        'light-green': '#ECFDF5',   // A very light green for backgrounds
-        'background': '#F9FAFB',    // A soft off-white background
-        'text-dark': '#111827',     // A deep gray for primary text
-        'text-light': '#6B7280',    // A lighter gray for secondary text
+        background: 'var(--background)',
+        foreground: 'var(--foreground)',
+        card: 'var(--card)',
+        'card-foreground': 'var(--card-foreground)',
+        primary: 'var(--primary)',
+        'primary-foreground': 'var(--primary-foreground)',
+        secondary: 'var(--secondary)',
+        'secondary-foreground': 'var(--secondary-foreground)',
+        accent: 'var(--accent)',
+        'accent-foreground': 'var(--accent-foreground)',
+        muted: 'var(--muted)',
+        'muted-foreground': 'var(--muted-foreground)',
+        border: 'var(--border)',
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['var(--font-geist-sans)'],
+        mono: ['var(--font-geist-mono)'],
       },
-      boxShadow: {
-        'glow': '0 0 20px rgba(16, 185, 129, 0.3)', // A green glow effect
+      animation: {
+        float: 'float 6s ease-in-out infinite',
+        'pulse-slow': 'pulse 3s ease-in-out infinite',
+        'slide-up': 'slideInUp 0.6s ease-out',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-20px)' },
+        },
+        slideInUp: {
+          from: { opacity: '0', transform: 'translateY(30px)' },
+          to: { opacity: '1', transform: 'translateY(0)' },
+        }
       }
     },
   },
