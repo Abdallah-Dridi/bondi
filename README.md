@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bondi Protocol
+
+https://imgur.com/a/WPwKfSd
+
+Shared Finance, Reimagined. Bondi is a decentralized application (dApp) built on a modern tech stack, designed to bring transparency, automation, and security to group finances. It replaces chaotic spreadsheets and group chats with an immutable, on-chain ledger for managing shared expenses, chores, and subscriptions.
+
+Live Demo (You can fill this in once you deploy the project)
+
+## The Vision
+The traditional methods of managing shared finances are broken. They rely on manual tracking, trust, and awkward conversations, leading to disputes and a lack of transparency. Bondi solves this by leveraging blockchain technology to create a single source of truth. Our protocol is built on the core principles of:
+
+Transparency: All transactions are recorded on-chain, verifiable by any member of the group.
+
+Automation: Smart contracts handle the complex logic of expense splitting and recurring payments, eliminating human error.
+
+Security: By utilizing a decentralized ledger, we remove single points of failure and ensure that user data and funds are managed with the highest level of security.
+
+## Core Features
+🔐 Immutable Ledger: Cryptographically secured records prevent tampering and create a permanent, verifiable history of all group activities.
+
+💸 Smart Expense Splitting: Automatically calculate who owes what with gas-optimized smart contracts. Supports complex splits by percentage, amount, or shares.
+
+📋 Verifiable Chore Tracking: A fair and transparent system for shared responsibilities with on-chain records of task assignment and completion.
+
+🔄 Automated Subscriptions: Set up recurring payments that are automatically split and settled, eliminating the need to chase payments.
+
+🗳️ Decentralized Governance: BONDI token holders can stake their tokens to vote on protocol upgrades, fee structures, and the future of the ecosystem.
+
+## Tech Stack & Architecture
+This project is a full-stack dApp built with a focus on modern development practices, security, and user experience.
+
+Frontend:
+
+Framework: Next.js (React)
+
+Styling: Tailwind CSS
+
+Animation: Framer Motion
+
+Icons: Lucide React
+
+Blockchain & Smart Contracts:
+
+Language: Solidity
+
+Development Environment: Hardhat / Foundry (Choose one as you build)
+
+Target Network: EVM-compatible (e.g., Ethereum, Polygon, Arbitrum)
+
+Deployment:
+
+Frontend: Vercel
+
+Smart Contracts: Alchemy / Infura
 
 ## Getting Started
+To get a local copy up and running, follow these simple steps.
 
-First, run the development server:
+Prerequisites
+Node.js (v18 or later)
 
-```bash
+npm or yarn
+
+A code editor (like VS Code)
+
+Installation
+Clone the repository:
+
+git clone https://github.com/your-username/bondi.git
+cd bondi
+
+Install NPM packages:
+
+npm install
+
+Run the development server:
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000 with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Contributing
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are greatly appreciated.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement."
 
-## Learn More
+Fork the Project
 
-To learn more about Next.js, take a look at the following resources:
+Create your Feature Branch (git checkout -b feature/AmazingFeature)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Commit your Changes (git commit -m 'Add some AmazingFeature')
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Push to the Branch (git push origin feature/AmazingFeature)
 
-## Deploy on Vercel
+Open a Pull Request
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+Distributed under the MIT License. See LICENSE.txt for more information.
