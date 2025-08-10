@@ -1,177 +1,234 @@
 "use client";
-import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useState } from 'react';
+import { Layers, ShieldCheck, Vote, CheckCircle } from 'lucide-react';
+
+const ecosystemPillars = [
+  {
+    icon: <Layers />,
+    title: "Utility",
+    description: "The BONDI token is the native asset that powers the entire ecosystem, used for unlocking features and facilitating value transfer.",
+    details: [
+      "Access premium group features and tools.",
+      "Use as a medium for instant, low-cost settlements.",
+      "Required for creating and participating in large-scale Bonds."
+    ],
+    visual: () => (
+      <div className="w-full h-full flex items-center justify-center p-4">
+        <motion.div
+          className="w-48 h-64 bg-card rounded-xl border border-border p-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="w-full h-24 bg-muted rounded-md mb-3" />
+          <div className="h-4 bg-muted rounded w-3/4 mb-2" />
+          <div className="h-3 bg-muted rounded w-1/2" />
+        </motion.div>
+      </div>
+    )
+  },
+  {
+    icon: <ShieldCheck />,
+    title: "Staking",
+    description: "Secure the network and earn rewards by staking your BONDI tokens. Stakers receive a share of the protocol's revenue.",
+    details: [
+      "Earn real yield from protocol-generated fees.",
+      "Help secure the network and validate transactions.",
+      "Gain eligibility for future airdrops and rewards."
+    ],
+    visual: () => (
+      <div className="w-full h-full flex items-center justify-center p-4 relative">
+        <motion.div
+          className="w-48 h-48 border-2 border-primary/50 rounded-full"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+        />
+        <motion.div
+          className="absolute w-2 h-2 bg-primary rounded-full"
+          animate={{
+            offset: [0, 1],
+            pathLength: [0, 1],
+            path: `M 120, 20 A 100 100, 0, 1, 1, 120, 220 A 100 100, 0, 1, 1, 120, 20`
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+        />
+        <ShieldCheck className="w-16 h-16 text-primary absolute" />
+      </div>
+    )
+  },
+  {
+    icon: <Vote />,
+    title: "Governance",
+    description: "Shape the future of Bondi. Staked tokens grant voting rights, allowing you to participate in key protocol decisions.",
+    details: [
+      "Vote on protocol upgrades and new feature integrations.",
+      "Participate in treasury management and fund allocation.",
+      "Submit your own proposals for community consideration."
+    ],
+    visual: () => (
+      <div className="w-full h-full p-6 flex flex-col justify-center gap-4">
+        {[ "Adjust Fee Structure", "Integrate New Chain", "Community Grant"].map((proposal, i) => (
+          <motion.div
+            key={i}
+            className="flex items-center justify-between gap-4 p-3 bg-card rounded-lg"
+            initial={{ x: -20, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ delay: i * 0.2 }}
+          >
+            <span className="text-foreground text-sm">{proposal}</span>
+            <div className="w-16 h-6 bg-muted rounded-full"/>
+          </motion.div>
+        ))}
+      </div>
+    )
+  }
+];
 
 export default function Ecosystem() {
-  const [stakingAmount, setStakingAmount] = useState(1000);
-  const [apy, setApy] = useState(12.5);
-  const [estimatedRewards, setEstimatedRewards] = useState(0);
-  
-  useEffect(() => {
-    const rewards = (stakingAmount * apy) / 100;
-    setEstimatedRewards(parseFloat(rewards.toFixed(2)));
-  }, [stakingAmount, apy]);
-  
+  const [activePillar, setActivePillar] = useState(1); // Default to Staking
+
   return (
-    <section id="ecosystem" className="py-20 px-6 relative">
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-[#0a0a2a] to-[#1a1a2e]"></div>
+    <section id="ecosystem" className="py-32 px-6 relative bg-card/20">
       <div className="container mx-auto">
-        <div className="text-center mb-16">
+        <div className="text-center mb-20">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-bold mb-4"
+            className="font-display text-5xl md:text-6xl font-semibold mb-6"
           >
-            Bondi <span className="text-gradient">Staking</span>
+            The Bondi Ecosystem
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
-            className="text-xl text-muted-foreground max-w-2xl mx-auto"
+            className="text-xl text-secondary max-w-3xl mx-auto"
           >
-            Earn rewards while supporting the ecosystem
+            A self-sustaining economic flywheel where utility, staking, and
+            governance work in concert to create long-term value.
           </motion.p>
         </div>
-        
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="glass p-8 rounded-3xl border border-primary/20"
-          >
-            <h3 className="text-2xl font-bold mb-6">Staking Dashboard</h3>
-            
-            <div className="mb-8">
-              <div className="flex justify-between mb-2">
-                <span>Staking APY</span>
-                <span className="text-gradient font-bold">{apy}%</span>
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-2.5 mb-8">
-                <div
-                  className="bg-gradient-to-r from-primary to-secondary h-2.5 rounded-full"
-                  style={{ width: `${apy}%` }}
-                ></div>
-              </div>
-              
-              <div className="flex justify-between mb-4">
-                <span>Stake Amount (BONDI)</span>
-                <span className="text-muted-foreground">Balance: 5,000</span>
-              </div>
-              <div className="relative mb-6">
-                <input
-                  type="range"
-                  min="100"
-                  max="5000"
-                  value={stakingAmount}
-                  onChange={(e) => setStakingAmount(parseInt(e.target.value))}
-                  className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+
+        <div className="grid lg:grid-cols-2 gap-10 items-center">
+          {/* Left Column: Interactive Flywheel Diagram */}
+          <div className="relative min-h-[500px] flex items-center justify-center">
+            <motion.div
+              className="absolute w-full max-w-lg h-full"
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.7, delay: 0.2 }}
+            >
+              {/* Connecting Lines */}
+              <svg className="absolute inset-0 w-full h-full" fill="none">
+                <motion.path
+                  d="M 250 100 A 150 150 0 1 1 100 250"
+                  stroke="var(--border)"
+                  strokeWidth="1"
+                  strokeDasharray="4 4"
                 />
-                <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                  <span>100</span>
-                  <span>5,000</span>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                {[500, 1000, 5000].map((amount) => (
-                  <button
-                    key={amount}
-                    className={`py-2 rounded-lg ${
-                      stakingAmount === amount
-                        ? 'gradient-bg text-white'
-                        : 'glass border border-border'
-                    }`}
-                    onClick={() => setStakingAmount(amount)}
+                <motion.path
+                  d="M 400 250 A 150 150 0 1 1 250 400"
+                  stroke="var(--border)"
+                  strokeWidth="1"
+                  strokeDasharray="4 4"
+                />
+                <motion.path
+                  d="M 100 250 A 150 150 0 1 1 250 400"
+                  stroke="var(--border)"
+                  strokeWidth="1"
+                  strokeDasharray="4 4"
+                />
+              </svg>
+
+              {/* Pillar Nodes */}
+              {ecosystemPillars.map((pillar, index) => {
+                // Pre-calculate positions with fixed precision
+                const angle = (index * 2 * Math.PI) / 3;
+                const top = 50 + 40 * Math.sin(angle);
+                const left = 50 + 40 * Math.cos(angle);
+
+                return (
+                  <motion.div
+                    key={index}
+                    className="absolute w-40 h-40"
+                    onHoverStart={() => setActivePillar(index)}
+                    style={{
+                      top: `${top.toFixed(2)}%`, // Fixed precision
+                      left: `${left.toFixed(2)}%`, // Fixed precision
+                      translateX: "-50%",
+                      translateY: "-50%",
+                    }}
                   >
-                    {amount}
-                  </button>
-                ))}
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4 mb-8">
-              <div className="glass p-4 rounded-xl">
-                <div className="text-sm text-muted-foreground mb-1">You Stake</div>
-                <div className="text-xl font-bold">{stakingAmount} BONDI</div>
-              </div>
-              <div className="glass p-4 rounded-xl">
-                <div className="text-sm text-muted-foreground mb-1">You Earn</div>
-                <div className="text-xl font-bold text-gradient">{estimatedRewards} BONDI</div>
-              </div>
-            </div>
-            
-            <button className="w-full py-4 rounded-full gradient-bg text-white font-semibold hover:scale-[1.02] transition-transform">
-              Connect Wallet to Stake
-            </button>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            className="text-left"
-          >
-            <h3 className="text-2xl font-bold mb-6">Staking Benefits</h3>
-            
-            <div className="space-y-6">
-              <motion.div 
-                className="flex items-start glass p-6 rounded-2xl"
-                whileHover={{ translateX: 10 }}
+                    <div
+                      className={`w-full h-full rounded-full flex flex-col items-center justify-center text-center p-4 transition-all duration-300 ${
+                        activePillar === index
+                          ? "bg-card border-2 border-primary shadow-2xl"
+                          : "bg-card/50 border border-border"
+                      }`}
+                    >
+                      <div
+                        className={`p-3 rounded-lg mb-2 ${
+                          activePillar === index
+                            ? "text-primary"
+                            : "text-secondary"
+                        }`}
+                      >
+                        {pillar.icon}
+                      </div>
+                      <h4 className="font-bold text-sm text-foreground">
+                        {pillar.title}
+                      </h4>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </motion.div>
+          </div>
+
+          {/* Right Column: Detailed Information Pane */}
+          <div className="relative min-h-[500px]">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activePillar}
+                className="absolute inset-0 glass rounded-2xl p-8"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.3 }}
               >
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mr-4">
-                  <span className="text-white">💰</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-2">Earn Passive Income</h4>
-                  <p className="text-muted-foreground">
-                    Get up to 12.5% APY on your staked BONDI tokens. Rewards distributed daily.
-                  </p>
+                <div className="grid md:grid-cols-2 gap-8 h-full">
+                  <div className="flex flex-col justify-center">
+                    <h3 className="font-display text-4xl font-semibold mb-4 text-foreground">
+                      {ecosystemPillars[activePillar].title}
+                    </h3>
+                    <p className="text-lg text-secondary mb-6">
+                      {ecosystemPillars[activePillar].description}
+                    </p>
+                    <div className="space-y-3">
+                      {ecosystemPillars[activePillar].details.map(
+                        (detail, i) => (
+                          <div
+                            key={i}
+                            className="flex items-start gap-3 text-base"
+                          >
+                            <CheckCircle className="w-5 h-5 mt-1 text-primary flex-shrink-0" />
+                            <span className="text-secondary">{detail}</span>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </div>
+                  <div className="relative w-full h-full min-h-[250px] bg-card/50 rounded-lg overflow-hidden">
+                    {ecosystemPillars[activePillar].visual()}
+                  </div>
                 </div>
               </motion.div>
-              
-              <motion.div 
-                className="flex items-start glass p-6 rounded-2xl"
-                whileHover={{ translateX: 10 }}
-              >
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-accent to-secondary flex items-center justify-center mr-4">
-                  <span className="text-white">🗳️</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-2">Governance Rights</h4>
-                  <p className="text-muted-foreground">
-                    Vote on protocol upgrades, fee structures, and new features.
-                  </p>
-                </div>
-              </motion.div>
-              
-              <motion.div 
-                className="flex items-start glass p-6 rounded-2xl"
-                whileHover={{ translateX: 10 }}
-              >
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-secondary flex items-center justify-center mr-4">
-                  <span className="text-white">🔒</span>
-                </div>
-                <div>
-                  <h4 className="font-bold text-lg mb-2">Secure & Trustless</h4>
-                  <p className="text-muted-foreground">
-                    Audited smart contracts ensure your funds are always safe.
-                  </p>
-                </div>
-              </motion.div>
-            </div>
-            
-            <div className="mt-10 glass p-6 rounded-2xl border border-secondary/20">
-              <h4 className="font-bold text-lg mb-3">Total Value Locked</h4>
-              <div className="text-3xl font-bold text-gradient mb-2">$2.4M+</div>
-              <div className="text-sm text-muted-foreground">
-                Secured by Bondi staking contracts
-              </div>
-            </div>
-          </motion.div>
+            </AnimatePresence>
+          </div>
         </div>
       </div>
     </section>

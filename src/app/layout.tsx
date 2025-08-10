@@ -1,24 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
-  display: "swap",
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  weight: ["400", "500", "600"],
-  display: "swap",
-});
-
 export const metadata: Metadata = {
-  title: "Bondi — Split bills, share chores & manage subscriptions fairly",
-  description: "Bondi is a friendly blockchain-backed app for roommates and groups. Track expenses, chores, and recurring payments with transparent, tamper-evident records. Try the demo or start a free group.",
+  title: "Bondi — Shared Finance, Reimagined.",
+  description: "From chaotic group chats and messy spreadsheets to a transparent, automated ledger on the blockchain. This is how modern groups manage money.",
   keywords: [
     "bill splitting app",
     "roommate expenses", 
@@ -33,16 +18,16 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Bondi Team" }],
   openGraph: {
-    title: "Bondi — Split bills, share chores & manage subscriptions fairly",
-    description: "Simplify group life. One shared ledger for bills, chores, and subscriptions.",
+    title: "Bondi — Shared Finance, Reimagined.",
+    description: "The blockchain-powered solution for transparent expense sharing, chore management, and fair settlements.",
     type: "website",
     locale: "en_US",
     siteName: "Bondi",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bondi — Split bills, share chores & manage subscriptions fairly", 
-    description: "Simplify group life. One shared ledger for bills, chores, and subscriptions.",
+    title: "Bondi — Shared Finance, Reimagined.", 
+    description: "The blockchain-powered solution for transparent expense sharing, chore management, and fair settlements.",
     creator: "@BondiApp",
   },
   robots: {
@@ -66,13 +51,13 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://api.fontshare.com" />
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=satoshi@700,500,400&f[]=clash-display@600&display=swap"
+          rel="stylesheet"
+        />
       </head>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-        suppressHydrationWarning={true}
-      >
+      <body suppressHydrationWarning={true}>
         {children}
       </body>
     </html>

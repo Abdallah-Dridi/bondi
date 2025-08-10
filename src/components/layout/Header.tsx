@@ -1,6 +1,13 @@
 "use client";
 import { useState, useEffect } from 'react';
-import { navLinks } from '@/data/bondiData';
+import { motion } from 'framer-motion';
+
+const navLinks = [
+  { href: "#features", label: "Features" },
+  { href: "#how-it-works", label: "How It Works" },
+  { href: "#ecosystem", label: "Ecosystem" },
+  { href: "#testimonials", label: "Testimonials" },
+];
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,41 +21,49 @@ export default function Header() {
   }, []);
 
  return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'glass-dark backdrop-blur-lg border-b border-border' : ''}`}>
-      <div className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-10 h-10 gradient-bg rounded-xl flex items-center justify-center animate-pulse-slow">
-              <span className="text-white font-bold text-xl">B</span>
+    <motion.header 
+      className={`fixed top-0 w-full z-50 transition-all duration-300`}
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5, delay: 0.5 }}
+    >
+      <div 
+        className={`w-full transition-all duration-300 ${isScrolled ? 'pt-4' : 'pt-8'}`}
+      >
+        <div className="container mx-auto px-6 py-4 glass rounded-xl border border-border/50">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <a href="#" className="flex items-center space-x-3">
+              <div className="w-8 h-8 relative">
+                  <div className="w-full h-full rounded-full border-2 border-foreground"/>
+                  <div className="absolute -top-1 -right-1 w-3 h-3 rounded-full bg-primary border-2 border-background"/>
+              </div>
+              <span className="font-display text-2xl font-semibold text-foreground">Bondi</span>
+            </a>
+            
+            {/* Navigation */}
+            <nav className="hidden md:flex items-center space-x-8">
+              {navLinks.map((link) => (
+                <a 
+                  key={link.href} 
+                  href={link.href}
+                  className="relative text-secondary hover:text-foreground transition-colors group"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"/>
+                </a>
+              ))}
+            </nav>
+            
+            {/* CTA Button */}
+            <div className="flex items-center space-x-4">
+              <button className="px-6 py-2 rounded-lg bg-primary text-background font-semibold glow-hover">
+                Launch App
+              </button>
             </div>
-            <span className="text-2xl font-bold text-gradient">Bondi</span>
-          </div>
-          
-          {/* Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navLinks.map((link) => (
-              <a 
-                key={link.href} 
-                href={link.href}
-                className="text-muted-foreground hover:text-foreground transition-colors hover:underline underline-offset-4 decoration-primary"
-              >
-                {link.label}
-              </a>
-            ))}
-          </div>
-          
-          {/* Wallet buttons */}
-          <div className="flex items-center space-x-4">
-            <button className="px-6 py-2 rounded-full border border-border hover:border-primary transition-colors hover:bg-primary/10">
-              Connect Wallet
-            </button>
-            <button className="px-6 py-2 rounded-full gradient-bg text-white font-medium glow-hover">
-              Launch App
-            </button>
           </div>
         </div>
       </div>
-    </nav>
+    </motion.header>
   );
 }

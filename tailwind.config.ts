@@ -23,24 +23,12 @@ const config = {
         border: 'var(--border)',
       },
       fontFamily: {
-        sans: ['var(--font-geist-sans)'],
-        mono: ['var(--font-geist-mono)'],
+        sans: ['var(--font-sans)'],
+        display: ['var(--font-display)'],
       },
       animation: {
-        float: 'float 6s ease-in-out infinite',
-        'pulse-slow': 'pulse 3s ease-in-out infinite',
-        'slide-up': 'slideInUp 0.6s ease-out',
+        'spin-slow': 'spin 10s linear infinite',
       },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        slideInUp: {
-          from: { opacity: '0', transform: 'translateY(30px)' },
-          to: { opacity: '1', transform: 'translateY(0)' },
-        }
-      }
     },
   },
   plugins: [],

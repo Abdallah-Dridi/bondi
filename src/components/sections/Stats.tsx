@@ -1,25 +1,38 @@
-// src/components/sections/Stats.tsx
 "use client";
+import { motion } from 'framer-motion';
+
+const stats = [
+  { value: "$2.4M+", label: "Total Value Locked" },
+  { value: "15,000+", label: "Active Users" },
+  { value: "99.99%", label: "Uptime" },
+  { value: "< 0.5s", label: "Transaction Finality" }
+];
 
 export default function Stats() {
-  const stats = [
-    { value: "$2.4B+", label: "Total Volume Locked" },
-    { value: "150K+", label: "Active Users" },
-    { value: "99.99%", label: "Uptime" },
-    { value: "< 0.01s", label: "Transaction Speed" }
-  ];
-
   return (
-    <section id="stats" className="py-20 px-6">
+    <section id="stats" className="py-24 px-6 bg-card/20">
       <div className="container mx-auto">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <motion.div
+          className="grid grid-cols-2 md:grid-cols-4 gap-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ staggerChildren: 0.1 }}
+        >
           {stats.map((stat, index) => (
-            <div key={index} className="text-center hover-card">
-              <h3 className="text-3xl md:text-4xl font-bold text-gradient mb-2">{stat.value}</h3>
-              <p className="text-muted-foreground">{stat.label}</p>
-            </div>
+            <motion.div
+              key={index}
+              className="text-center"
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                visible: { opacity: 1, y: 0 },
+              }}
+            >
+              <h3 className="font-display text-4xl md:text-5xl font-semibold text-gradient mb-2">{stat.value}</h3>
+              <p className="text-secondary">{stat.label}</p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

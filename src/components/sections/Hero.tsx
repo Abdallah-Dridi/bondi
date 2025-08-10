@@ -1,174 +1,304 @@
 "use client";
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { Share2, Receipt } from 'lucide-react';
 import { useRef } from 'react';
 
+// A more detailed component for the rotating protocol core
+const ProtocolCore = () => (
+  <motion.div
+    className="absolute inset-0"
+    animate={{ rotate: 360 }}
+    transition={{ duration: 80, repeat: Infinity, ease: 'linear' }}
+  >
+    {/* Orbiting Rings */}
+    <div className="absolute inset-8 border border-primary/20 rounded-full" />
+    <div className="absolute inset-12 border border-primary/30 rounded-full" style={{ transform: 'rotateX(70deg)'}}/>
+    <div className="absolute inset-12 border border-primary/30 rounded-full" style={{ transform: 'rotateY(70deg)'}}/>
+
+    {/* Inner Globe */}
+    <div className="absolute inset-20">
+      <div className="absolute inset-0 border border-primary/20 rounded-full animate-pulse" />
+      {[0, 45, 90, 135].map(deg => (
+         <div key={deg} className="absolute inset-0 border-l border-primary/20 rounded-full" style={{ transform: `rotate(${deg}deg)`}}/>
+      ))}
+    </div>
+
+    {/* Central Heartbeat */}
+    <motion.div
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-primary blur-lg"
+      animate={{ scale: [1, 1.5, 1], opacity: [0.7, 1, 0.7] }}
+      transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+    />
+  </motion.div>
+);
+
+
 export default function Hero() {
-  const constraintsRef = useRef(null);
-  
+  const heroRef = useRef<HTMLElement>(null);
+
+  // Mouse move parallax effect
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+
+  const rotateX = useTransform(mouseY, [-600, 600], [10, -10]);
+  const rotateY = useTransform(mouseX, [-600, 600], [-10, 10]);
+
+  const handleMouseMove = (event: React.MouseEvent) => {
+    if (heroRef.current) {
+      const { left, top, width, height } = heroRef.current.getBoundingClientRect();
+      mouseX.set(event.clientX - left - width / 2);
+      mouseY.set(event.clientY - top - height / 2);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+  }
+
   return (
-    <section 
-      className="relative min-h-screen flex items-center justify-center px-6 pt-32 pb-20"
-      ref={constraintsRef}
+    <section
+      ref={heroRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      className="relative min-h-screen flex items-center justify-center px-6 pt-32 pb-20 overflow-hidden"
     >
-      {/* Floating elements */}
-      <motion.div 
-        className="absolute top-1/4 left-1/4 w-48 h-48 rounded-full bg-gradient-to-br from-primary to-secondary blur-3xl opacity-20"
-        animate={{
-          x: [0, 30, 0],
-          y: [0, -40, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
-      ></motion.div>
-      
-      <motion.div 
-        className="absolute bottom-1/3 right-1/4 w-32 h-32 rounded-full bg-gradient-to-br from-accent to-secondary blur-2xl opacity-15"
-        animate={{
-          x: [0, -20, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut",
-          delay: 2
-        }}
-      ></motion.div>
-      
+      {/* Background elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-background" />
+        <motion.div
+          className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--accent_alpha),transparent_70%)] opacity-30"
+          style={{
+            x: useTransform(mouseX, (r) => -r / 10),
+            y: useTransform(mouseY, (r) => -r / 10),
+          }}
+        />
+      </div>
+
       <div className="container mx-auto relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-center lg:text-left"
-          >
-            <motion.div 
-              className="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass border border-primary/20 mb-8"
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-            >
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-              </span>
-              <span className="text-sm text-muted-foreground">LIVE ON MAINNET</span>
-            </motion.div>
-            
+        <div className="grid lg:grid-cols-5 gap-8 items-center">
+          {/* Left Column: Text content (spanning 2 columns) */}
+          <div className="lg:col-span-2 text-center lg:text-left z-10">
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="text-5xl md:text-7xl font-bold leading-tight mb-6"
+              transition={{ delay: 0.2 }}
+              className="font-display text-5xl md:text-6xl font-semibold leading-tight"
             >
-              Revolutionizing
+              Shared Finance,
               <br />
-              <span className="text-gradient">Group Finance</span>
+              <span className="text-gradient">Reimagined.</span>
             </motion.h1>
-            
+
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-10"
+              transition={{ delay: 0.4 }}
+              className="text-lg text-secondary max-w-lg mx-auto lg:mx-0 mt-6 mb-10"
             >
-              The blockchain-powered solution for transparent expense sharing, chore management, and fair settlements.
+              From chaotic group chats and messy spreadsheets to a transparent,
+              automated ledger on the blockchain. This is how modern groups
+              manage money.
             </motion.p>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
+              transition={{ delay: 0.6 }}
               className="flex flex-wrap gap-4 justify-center lg:justify-start"
             >
-              <button className="px-8 py-4 rounded-full gradient-bg text-white font-semibold text-lg glow-hover group">
+              <button className="px-8 py-4 rounded-lg bg-primary text-background font-semibold text-lg glow-hover group">
                 <span className="flex items-center">
                   <span>Launch dApp</span>
-                  <span className="ml-2 group-hover:translate-x-1 transition-transform">↗</span>
-                </span>
-              </button>
-              <button className="px-8 py-4 rounded-full glass border border-border hover:border-primary transition-colors group">
-                <span className="flex items-center">
-                  <span>Watch Demo</span>
-                  <span className="ml-2 group-hover:translate-x-1 transition-transform">→</span>
+                  <span className="ml-2 group-hover:translate-x-1 transition-transform">
+                    ↗
+                  </span>
                 </span>
               </button>
             </motion.div>
-          </motion.div>
-          
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="relative"
-          >
-            <div className="relative w-full h-[500px] flex items-center justify-center">
-              {/* Interactive dApp preview */}
-              <div className="absolute w-full h-full max-w-md">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-primary/30 to-secondary/30 rounded-full blur-2xl animate-pulse"></div>
-                
-                <motion.div 
-                  className="absolute top-10 left-0 glass p-6 rounded-2xl border border-primary/20 w-64"
-                  drag
-                  dragConstraints={constraintsRef}
-                  whileHover={{ scale: 1.05 }}
+          </div>
+
+          {/* Right Column: Masterpiece Visual Element (spanning 3 columns) */}
+          <div className="lg:col-span-3 relative h-[600px] flex items-center justify-center">
+            <motion.div
+              className="w-full h-full"
+              style={{ perspective: "2000px" }}
+            >
+              <motion.div
+                className="w-full h-full relative"
+                style={{ transformStyle: "preserve-3d", rotateX, rotateY }}
+                transition={{ type: "spring", stiffness: 50, damping: 15 }}
+              >
+                {/* Main Glass Container */}
+                <motion.div
+                  className="absolute inset-10 bg-card/5 border border-border/30 rounded-3xl shadow-2xl"
+                  style={{ transform: "translateZ(-50px)" }}
+                />
+
+                {/* Central Protocol Core */}
+                <motion.div
+                  className="absolute top-1/2 left-1/2 w-80 h-80 -translate-x-1/2 -translate-y-1/2"
+                  style={{
+                    transformStyle: "preserve-3d",
+                    transform: "translateZ(50px)",
+                  }}
                 >
-                  <div className="flex items-center mb-4">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                      <span className="text-white">$</span>
+                  <motion.div
+                    className="absolute inset-0"
+                    animate={{ rotate: 360 }}
+                    transition={{
+                      duration: 60,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
+                  >
+                    <ProtocolCore />
+                  </motion.div>
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-primary/50 blur-lg" />
+                  <Share2 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 text-primary" />
+                </motion.div>
+
+                {/* Satellite "Group" Nodes */}
+                {[
+                  {
+                    pos: { top: "15%", left: "5%" },
+                    z: 220,
+                    name: "Apartment 3B",
+                    expense: "Rent Split",
+                  },
+                  {
+                    pos: { top: "30%", left: "75%" },
+                    z: 150,
+                    name: "Project Titan",
+                    expense: "Contractor Payout",
+                  },
+                  {
+                    pos: { top: "70%", left: "10%" },
+                    z: 200,
+                    name: "Vacation Fund",
+                    expense: "Flight Booking",
+                  },
+                ].map((node, i) => (
+                  <motion.div
+                    key={i}
+                    className="absolute p-3 glass rounded-xl shadow-xl w-52"
+                    style={{
+                      ...node.pos,
+                      transform: `translateZ(${node.z}px)`,
+                    }}
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{
+                      delay: 1 + i * 0.2,
+                      duration: 0.5,
+                      ease: "easeOut",
+                    }}
+                  >
+                    <p className="font-bold text-sm text-foreground mb-1">
+                      {node.name}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <div className="flex -space-x-2">
+                        <div className="w-5 h-5 rounded-full bg-muted border-2 border-card" />
+                        <div className="w-5 h-5 rounded-full bg-muted border-2 border-card" />
+                      </div>
+                      <div className="text-xs text-secondary flex items-center gap-1">
+                        <Receipt className="w-3 h-3" />
+                        <span>{node.expense}</span>
+                      </div>
                     </div>
-                    <h3 className="ml-3 font-bold">Expense Split</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Rent: $1200</p>
-                  <div className="mt-4 flex justify-between items-center">
-                    <span className="text-sm">4 people</span>
-                    <span className="font-bold">$300 each</span>
+                  </motion.div>
+                ))}
+
+                {/* Live Transaction Feed */}
+                <motion.div
+                  className="absolute top-[65%] right-[0%] w-64 p-3 glass rounded-lg shadow-xl"
+                  style={{ transform: `translateZ(250px)` }}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.8 }}
+                >
+                  <p className="text-xs text-secondary mb-2">
+                    Live Transactions
+                  </p>
+                  <div className="space-y-2 text-xs">
+                    <p className="flex items-center">
+                      <Receipt className="w-3 h-3 mr-2 text-primary" />
+                      Rent Payment Received
+                    </p>
+                    <p className="flex items-center">
+                      <Receipt className="w-3 h-3 mr-2 text-primary" />
+                      Utility Bill Split
+                    </p>
                   </div>
                 </motion.div>
-                
-                <motion.div 
-                  className="absolute bottom-20 right-0 glass p-6 rounded-2xl border border-accent/20 w-64"
-                  drag
-                  dragConstraints={constraintsRef}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <div className="flex items-center mb-4">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-accent to-secondary flex items-center justify-center">
-                      <span className="text-white">✓</span>
-                    </div>
-                    <h3 className="ml-3 font-bold">Chore Completed</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Kitchen cleaned by Sarah</p>
-                  <div className="mt-4 flex items-center">
-                    <div className="w-8 h-8 rounded-full bg-gray-200 border-2 border-dashed mr-2"></div>
-                    <span className="text-sm">+10 points</span>
-                  </div>
-                </motion.div>
-                
-                <motion.div 
-                  className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 glass p-6 rounded-2xl border border-secondary/20 w-72"
-                  drag
-                  dragConstraints={constraintsRef}
-                  whileHover={{ scale: 1.05 }}
-                >
-                  <div className="flex items-center mb-4">
-                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-secondary to-primary flex items-center justify-center">
-                      <span className="text-white">🔄</span>
-                    </div>
-                    <h3 className="ml-3 font-bold">Subscription</h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">Netflix: $15.99/month</p>
-                  <div className="mt-4 flex justify-between items-center">
-                    <span className="text-sm">Auto-split</span>
-                    <span className="font-bold">$3.99 each</span>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </motion.div>
+
+                {/* Connection Lines & Pings */}
+                {[
+                  { path: "M 130 115 L 250 250", z: 125, delay: 2 },
+                  { path: "M 480 190 L 310 280", z: 100, delay: 2.5 },
+                  { path: "M 140 440 L 260 320", z: 115, delay: 3 },
+                ].map((line, i) => (
+                  <svg
+                    key={i}
+                    viewBox="0 0 600 600"
+                    className="absolute inset-0 w-full h-full overflow-visible"
+                    style={{ transform: `translateZ(${line.z}px)` }}
+                  >
+                    <motion.path
+                      d={line.path}
+                      fill="none"
+                      stroke="url(#line-gradient)"
+                      strokeWidth="1"
+                      initial={{ pathLength: 0 }}
+                      animate={{ pathLength: 1 }}
+                      transition={{ delay: 1.8 + i * 0.2, duration: 1 }}
+                    />
+                    <defs>
+                      <linearGradient
+                        id="line-gradient"
+                        gradientUnits="userSpaceOnUse"
+                      >
+                        <stop
+                          offset="0%"
+                          stopColor="var(--primary)"
+                          stopOpacity="0"
+                        />
+                        <stop
+                          offset="100%"
+                          stopColor="var(--primary)"
+                          stopOpacity="1"
+                        />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Transaction "Data Packet" Animation */}
+                    <motion.g>
+                      <motion.circle
+                        r="4"
+                        fill="var(--primary)"
+                        style={{
+                          offsetPath: `path('${line.path}')`,
+                          // FIX: Move offsetDistance to style object
+                          offsetDistance: "0%",
+                        }}
+                        animate={{
+                          offsetDistance: "100%",
+                        }}
+                        transition={{
+                          delay: line.delay,
+                          duration: 2,
+                          repeat: Infinity,
+                          repeatDelay: 3,
+                          ease: "linear",
+                        }}
+                      />
+                    </motion.g>
+                  </svg>
+                ))}
+              </motion.div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

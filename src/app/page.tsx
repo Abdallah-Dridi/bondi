@@ -1,5 +1,6 @@
 import Header from '@/components/layout/Header';
 import Hero from '@/components/sections/Hero';
+import TrustedBy from '@/components/sections/TrustedBy';
 import Features from '@/components/sections/Features';
 import HowItWorks from '@/components/sections/HowItWorks';
 import Ecosystem from '@/components/sections/Ecosystem';
@@ -13,7 +14,7 @@ export default function Home() {
     <div className="min-h-screen bg-background overflow-x-hidden">
       {/* Dynamic Particle Background */}
       <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-[#030014] via-[#0f0f23] to-[#1e1b4b]"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-background"></div>
         <div className="particles">
           {[...Array(30)].map((_, i) => (
             <div 
@@ -22,20 +23,21 @@ export default function Home() {
               style={{
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
-                width: `${Math.random() * 10 + 2}px`,
-                height: `${Math.random() * 10 + 2}px`,
-                animationDelay: `${Math.random() * 5}s`,
-                background: `radial-gradient(circle, var(--primary) 0%, transparent 70%)`
+                width: `${Math.random() * 3 + 1}px`,
+                height: `${Math.random() * 3 + 1}px`,
+                animationDelay: `${Math.random() * 10}s`,
+                background: `radial-gradient(circle, var(--accent) 0%, transparent 70%)`
               }}
             ></div>
           ))}
         </div>
-        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-cover opacity-10"></div>
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-cover opacity-5"></div>
       </div>
 
       <Header />
       <main>
         <Hero />
+        <TrustedBy/>
         <Stats />
         <Features />
         <HowItWorks />
