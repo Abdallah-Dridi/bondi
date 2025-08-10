@@ -8,6 +8,8 @@ import Testimonials from '@/components/sections/Testimonials';
 import Stats from '@/components/sections/Stats';
 import CTA from '@/components/sections/CTA';
 import Footer from '@/components/layout/Footer';
+import FAQ from '@/components/sections/FAQ';
+import UseCases from '@/components/sections/UseCases';
 
 export default function Home() {
   return (
@@ -40,9 +42,11 @@ export default function Home() {
         <TrustedBy/>
         <Stats />
         <Features />
+        <UseCases/>
         <HowItWorks />
         <Ecosystem />
         <Testimonials />
+        <FAQ />
         <CTA />
       </main>
       <Footer />

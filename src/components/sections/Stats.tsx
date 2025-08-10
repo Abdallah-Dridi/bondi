@@ -2,10 +2,10 @@
 import { motion } from 'framer-motion';
 
 const stats = [
-  { value: "$2.4M+", label: "Total Value Locked" },
-  { value: "15,000+", label: "Active Users" },
-  { value: "99.99%", label: "Uptime" },
-  { value: "< 0.5s", label: "Transaction Finality" }
+  { value: "$1.7M+", label: "Value in Bonds" },
+  { value: "420+", label: "Active Bonds" },
+  { value: "1,200+", label: "Assets Fractionalized" },
+  { value: "8", label: "Avg. Members / Bond" }
 ];
 
 export default function Stats() {

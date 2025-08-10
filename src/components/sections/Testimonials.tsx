@@ -4,28 +4,28 @@ import { CheckCircle } from 'lucide-react';
 
 const testimonials = [
   {
-    name: "Sarah K.",
-    role: "Apartment Sharer",
-    quote: "Bondi completely eliminated the awkward 'who owes what' conversations with my roommates. The transparent ledger means everything is clear, and settlements are instant. It's a friendship-saver!",
-    short: "A friendship-saver! No more awkward money talks."
+    name: "DAOplomat",
+    role: "NFT Investor",
+    quote: "Bondi made it possible for our collector's DAO to acquire a blue-chip NFT that was out of reach for any single member. The process was seamless, and the fractional ownership is a game-changer for liquidity.",
+    short: "A game-changer for our collector's DAO."
   },
   {
-    name: "Mike T.",
-    role: "Student Housing Manager",
-    quote: "Managing finances for our student house was a nightmare of spreadsheets and Venmo requests. Bondi centralized everything. The automated subscription splitting for utilities is a game-changer.",
-    short: "Simplified our student housing finances."
+    name: "0x_dev",
+    role: "Dev Team Lead",
+    quote: "We're pooling funds monthly to rent a high-performance GPU cluster for our AI models. Bondi automates the contributions and provides transparent accounting. It's enterprise-level tooling for our decentralized team.",
+    short: "Enterprise-level tooling for our dev team."
   },
   {
-    name: "Jessica L.",
-    role: "Project Team Lead",
-    quote: "We use Bondi to manage shared costs for our remote team's software subscriptions. It's incredibly efficient and the on-chain records are perfect for transparent accounting.",
-    short: "Perfect for transparent team accounting."
+    name: "Staker Chad",
+    role: "Staking Pool Operator",
+    quote: "Running a validator node has high capital requirements. With Bondi, we were able to pool ETH from our community securely. The automated reward distribution is flawless.",
+    short: "Flawless reward distribution for our staking pool."
   },
   {
-    name: "David R.",
-    role: "Family Expense Manager",
-    quote: "Our family uses Bondi to track shared household expenses. It's so much better than a shared note. Knowing everything is recorded immutably gives us peace of mind.",
-    short: "Gives our family peace of mind."
+    name: "Anna R.",
+    role: "Real Estate Investor",
+    quote: "I'm now a fractional owner of a tokenized property with a group of investors I met through Bondi. It's democratizing access to assets that were previously inaccessible to me.",
+    short: "Democratizing access to real-world assets."
   },
 ];
 
@@ -40,7 +40,7 @@ export default function Testimonials() {
             viewport={{ once: true }}
             className="font-display text-5xl md:text-6xl font-semibold mb-6"
           >
-            Trusted by Modern Groups
+            Trusted by Forward-Thinking Investors
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -49,7 +49,7 @@ export default function Testimonials() {
             transition={{ delay: 0.1 }}
             className="text-xl text-secondary max-w-3xl mx-auto"
           >
-            From roommates and families to decentralized teams, see why users are choosing Bondi to manage their shared finances.
+            From DAOs and dev teams to investment clubs, see how groups are using Bondi to unlock new opportunities.
           </motion.p>
         </div>
 
@@ -79,13 +79,13 @@ export default function Testimonials() {
           {testimonials.slice(1).map((testimonial, index) => (
              <motion.div 
                 key={index}
-                className="p-8 glass rounded-2xl"
+                className="p-8 glass rounded-2xl flex flex-col"
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
             >
-              <p className="text-lg text-secondary mb-4">&quot;{testimonial.short}&quot;</p>
+              <p className="text-lg text-secondary mb-4 flex-grow">&quot;{testimonial.short}&quot;</p>
                <div className="flex items-center gap-4 mt-auto">
                 <div className="w-10 h-10 bg-muted rounded-full border-2 border-border" />
                 <div>

@@ -1,101 +1,89 @@
 "use client";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
-import { ShieldCheck, CircleDollarSign, ClipboardList, Repeat, ArrowRight, CheckCircle, Users } from 'lucide-react';
+import { CircleDollarSign, PieChart, Vote, ArrowRight, CheckCircle, Users, Lock } from 'lucide-react';
 
 const features = [
   {
-    icon: <ShieldCheck className="size-6" />,
-    title: "Immutable Ledger",
+    icon: <Lock className="size-6" />,
+    title: "Secure Asset Vaults",
     description:
-      "Every transaction, chore, and agreement is recorded on an immutable, transparent ledger.",
+      "Pool funds with your group into a non-custodial smart contract. Your capital is secure and transparently managed from day one.",
     details: [
-      "Cryptographically secured records prevent tampering.",
-      "Verifiable on-chain history for all group members.",
-      "Eliminates disputes with a single, permanent source of truth.",
+      "Funds are locked until the acquisition target is met.",
+      "On-chain transparency of all contributions and balances.",
+      "No single party can access or control the pooled funds.",
     ],
     visual: () => (
-      <motion.div className="w-full h-full flex items-center justify-center p-4">
-        <div className="flex items-center space-x-2">
-          {[...Array(3)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="w-24 h-32 bg-card border border-border rounded-lg flex flex-col items-center justify-center p-2"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2 }}
-            >
-              <span className="text-xs text-secondary">Block {816 + i}</span>
-              <ShieldCheck className="size-8 my-2 text-primary/50" />
-              {/* FIXED: Replaced Math.random() with a deterministic value */}
-              <span className="font-mono text-xs text-secondary">
-                0x...{((i + 1) * 12345).toString(16).slice(-4)}
-              </span>
-            </motion.div>
-          ))}
+      <motion.div className="w-full h-full flex items-center justify-center p-4 relative">
+        {/* User Wallets */}
+        {[
+          { x: -120, y: -80, delay: 0.2 },
+          { x: -120, y: 80, delay: 0.4 },
+          { x: 120, y: 0, delay: 0.6 },
+        ].map((pos, i) => (
           <motion.div
-            className="w-8 h-1 bg-primary"
-            initial={{ scaleX: 0, opacity: 0 }}
-            animate={{ scaleX: 1, opacity: 1 }}
-            transition={{ delay: 0.6 }}
-            style={{ transformOrigin: "left" }}
-          />
-          <motion.div
-            className="w-24 h-32 bg-card border border-dashed border-primary rounded-lg flex flex-col items-center justify-center p-2"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ delay: 0.8, repeat: Infinity, duration: 2 }}
+            key={i}
+            className="absolute w-16 h-16 bg-card border border-border rounded-full flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1, x: pos.x, y: pos.y }}
+            transition={{ type: 'spring', delay: pos.delay }}
           >
-            <span className="text-xs text-primary">Forging...</span>
+            <Users className="size-6 text-secondary" />
           </motion.div>
-        </div>
+        ))}
+        {/* Central Vault */}
+        <motion.div
+          className="w-40 h-40 bg-card border-2 border-primary rounded-2xl flex flex-col items-center justify-center text-center"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.1 }}
+        >
+          <Lock className="size-10 text-primary" />
+          <span className="font-mono text-sm mt-2 text-primary">SECURE VAULT</span>
+        </motion.div>
       </motion.div>
     ),
   },
   {
-    icon: <CircleDollarSign className="size-6" />,
-    title: "Smart Expense Splitting",
+    icon: <PieChart className="size-6" />,
+    title: "Liquid Fractional Ownership",
     description:
-      "Log a bill once, and let our smart contracts handle the rest automatically.",
+      "Receive tokens representing your exact share of an asset. Trade your stake freely on secondary markets.",
     details: [
-      "Gas-optimized contracts for low-cost transactions.",
-      "Supports complex splits by percentage, amount, or shares.",
-      "Real-time balance updates for all group members.",
+      "Your ownership is represented by a liquid, tradable token.",
+      "Exit your position anytime without selling the underlying asset.",
+      "Seamlessly transfer ownership and associated rights.",
     ],
     visual: () => (
       <motion.div className="w-full h-full flex items-center justify-center relative p-4">
         <motion.div
-          className="w-28 h-28 bg-primary rounded-full flex flex-col items-center justify-center font-mono text-background"
-          initial={{ scale: 0 }}
-          animate={{ scale: 1 }}
+          className="w-48 h-32 bg-card border border-border rounded-lg flex items-center justify-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
         >
-          <span className="text-md">TOTAL</span>
-          <span className="text-lg font-bold">$120.00</span>
+           <span className="text-lg font-bold">Asset</span>
         </motion.div>
-        {[0, 120, 240].map((deg, i) => {
-          // FIX: Calculate positions using trig functions
-          const angleInRad = deg * (Math.PI / 180);
-          const x = 120 * Math.cos(angleInRad);
-          const y = 120 * Math.sin(angleInRad);
-
+        
+        {[0, 1, 2, 3].map((i) => {
+          const angle = (i * 90 - 45) * (Math.PI / 180);
           return (
             <motion.div
-              key={deg}
-              className="absolute w-20 h-20 bg-card border border-border rounded-full flex items-center justify-center font-mono"
+              key={i}
+              className="absolute w-20 h-10 bg-primary/20 border border-primary rounded-lg flex items-center justify-center font-mono text-xs"
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 1,
-                x,
-                y,
+                x: 150 * Math.cos(angle),
+                y: 100 * Math.sin(angle),
               }}
               transition={{
                 delay: 0.5 + i * 0.1,
-                duration: 0.5,
                 type: "spring",
-                stiffness: 100,
               }}
             >
-              $40.00
+              25% Share
             </motion.div>
           );
         })}
@@ -104,86 +92,89 @@ const features = [
   },
 
   {
-    icon: <ClipboardList className="size-6" />,
-    title: "Verifiable Chore Tracking",
+    icon: <CircleDollarSign className="size-6" />,
+    title: "Automated Revenue Streams",
     description:
-      "Create a fair and transparent system for shared responsibilities.",
+      "Profits from assets like staking or real estate are automatically distributed to token holders, proportional to their stake.",
     details: [
-      "On-chain records of task assignment and completion.",
-      "Optional rewards system using smart contracts.",
-      "History of contributions is transparent and verifiable.",
+      "Receive payouts directly to your wallet on a set schedule.",
+      "Distribution is calculated and executed by the smart contract.",
+      "Eliminates manual accounting and ensures fair payouts.",
     ],
     visual: () => (
-      <motion.div className="w-full h-full p-8 flex flex-col justify-center gap-4">
-        {["Clean Kitchen", "Take out trash", "Pay electricity bill"].map(
-          (task, i) => (
+      <motion.div className="w-full h-full p-8 flex items-center justify-center relative">
+        <motion.div className="w-24 h-24 rounded-full bg-primary flex items-center justify-center"
+          initial={{scale: 0}}
+          animate={{scale: 1}}
+          transition={{delay: 0.2}}
+        >
+            <span className="text-background font-bold">REWARDS</span>
+        </motion.div>
+        
+        {[-1, 1].map(xDir => [-1, 1].map(yDir => {
+          const i = xDir * yDir + 2;
+          return (
             <motion.div
-              key={i}
-              className="flex items-center gap-4 p-4 bg-card rounded-lg"
-              initial={{ x: -20, opacity: 0 }}
-              animate={{ x: 0, opacity: 1 }}
-              transition={{ delay: i * 0.2 }}
+              key={`${xDir}-${yDir}`}
+              className="absolute w-12 h-12 rounded-full bg-card border border-border flex items-center justify-center"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, x: 100 * xDir, y: 100 * yDir }}
+              transition={{ delay: 0.5 + i * 0.1, type: 'spring' }}
             >
-              <motion.div
-                className="w-6 h-6 border-2 border-primary rounded-md flex items-center justify-center"
-                initial={{ background: "transparent" }}
-                animate={{ background: "#4ade80" }}
-                transition={{ delay: 1 + i * 0.5 }}
-              >
-                <motion.div
-                  initial={{ pathLength: 0 }}
-                  animate={{ pathLength: 1 }}
-                  transition={{ delay: 1 + i * 0.5, duration: 0.3 }}
-                >
-                  <svg
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#0A0A0A"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <motion.path d="M20 6L9 17l-5-5"></motion.path>
-                  </svg>
-                </motion.div>
-              </motion.div>
-              <span className="text-foreground text-lg">{task}</span>
+                <CircleDollarSign className="size-5 text-secondary"/>
             </motion.div>
           )
-        )}
+        }))}
       </motion.div>
     ),
   },
   {
-    icon: <Repeat className="size-6" />,
-    title: "Automated Subscriptions",
-    description: "Never chase anyone for their share of recurring bills again.",
+    icon: <Vote className="size-6" />,
+    title: "On-Chain Governance",
+    description: "Key decisions, like when to sell an asset, are made collectively through on-chain voting based on ownership stake.",
     details: [
-      "Set up recurring payments that are automatically split.",
-      "Funds are securely managed and disbursed via smart contract.",
-      "Full history of all subscription payments on-chain.",
+      "One token, one vote. Ensure fair and democratic decision-making.",
+      "Proposals and votes are recorded transparently on the blockchain.",
+      "Automate the execution of successful proposals.",
     ],
     visual: () => (
-      <motion.div className="w-full h-full flex items-center justify-center p-4">
-        <motion.div
-          className="w-56 h-56 border-dashed border-4 border-primary/50 rounded-full flex items-center justify-center"
-          animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        >
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-card border border-border">
-            <Users className="w-5 h-5 text-secondary" />
-          </div>
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-card border border-border">
-            <Users className="w-5 h-5 text-secondary" />
-          </div>
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 flex items-center justify-center rounded-full bg-card border border-border">
-            <Users className="w-5 h-5 text-secondary" />
-          </div>
-          <Repeat className="w-16 h-16 text-primary" />
+        <motion.div className="w-full h-full flex flex-col items-center justify-center p-4 gap-4">
+            <motion.div 
+                className="w-full max-w-sm p-4 bg-card border border-border rounded-lg"
+                initial={{opacity: 0, y: 20}}
+                animate={{opacity: 1, y: 0}}
+                transition={{delay: 0.2}}
+            >
+                <p className="font-bold text-center">Proposal: Sell Asset?</p>
+            </motion.div>
+            <div className="flex gap-4">
+                 <motion.div 
+                    className="p-4 bg-green-500/20 text-green-400 border border-green-500 rounded-lg"
+                    initial={{opacity: 0, scale: 0.5}}
+                    animate={{opacity: 1, scale: 1}}
+                    transition={{delay: 0.5}}
+                 >
+                    <span className="font-bold">YES: 75%</span>
+                </motion.div>
+                <motion.div 
+                    className="p-4 bg-red-500/20 text-red-400 border border-red-500 rounded-lg"
+                    initial={{opacity: 0, scale: 0.5}}
+                    animate={{opacity: 1, scale: 1}}
+                    transition={{delay: 0.7}}
+                >
+                    <span className="font-bold">NO: 25%</span>
+                </motion.div>
+            </div>
+             <motion.div 
+                className="mt-4 p-3 bg-primary/20 rounded-lg flex items-center gap-2"
+                initial={{opacity: 0}}
+                animate={{opacity: 1}}
+                transition={{delay: 1}}
+            >
+                <CheckCircle className="size-5 text-primary"/>
+                <span className="text-primary font-semibold">Proposal Passed</span>
+            </motion.div>
         </motion.div>
-      </motion.div>
     ),
   },
 ];
@@ -210,7 +201,7 @@ export default function Features() {
             transition={{ delay: 0.1 }}
             className="text-xl text-secondary max-w-3xl mx-auto"
           >
-            An ecosystem of interconnected modules designed for absolute transparency and efficiency in shared finance.
+            An ecosystem of interconnected smart contracts designed for secure, transparent, and liquid group asset ownership.
           </motion.p>
         </div>
         

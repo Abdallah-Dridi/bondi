@@ -1,6 +1,6 @@
 "use client";
 import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { Share2, Receipt } from 'lucide-react';
+import { Share2, Receipt, Cpu, ImageIcon, Landmark } from 'lucide-react';
 import { useRef } from 'react';
 
 // A more detailed component for the rotating protocol core
@@ -85,9 +85,9 @@ export default function Hero() {
               transition={{ delay: 0.2 }}
               className="font-display text-5xl md:text-6xl font-semibold leading-tight"
             >
-              Shared Finance,
+              Group Ownership,
               <br />
-              <span className="text-gradient">Reimagined.</span>
+              <span className="text-gradient">Evolved.</span>
             </motion.h1>
 
             <motion.p
@@ -96,9 +96,9 @@ export default function Hero() {
               transition={{ delay: 0.4 }}
               className="text-lg text-secondary max-w-lg mx-auto lg:mx-0 mt-6 mb-10"
             >
-              From chaotic group chats and messy spreadsheets to a transparent,
-              automated ledger on the blockchain. This is how modern groups
-              manage money.
+              From blue-chip NFTs to high-end GPU clusters, Bondi makes group
+              ownership simple, liquid, and secure. Pool funds, acquire assets,
+              and share the benefits—all on-chain.
             </motion.p>
 
             <motion.div
@@ -109,7 +109,7 @@ export default function Hero() {
             >
               <button className="px-8 py-4 rounded-lg bg-primary text-background font-semibold text-lg glow-hover group">
                 <span className="flex items-center">
-                  <span>Launch dApp</span>
+                  <span>Explore Bonds</span>
                   <span className="ml-2 group-hover:translate-x-1 transition-transform">
                     ↗
                   </span>
@@ -163,20 +163,23 @@ export default function Hero() {
                   {
                     pos: { top: "15%", left: "5%" },
                     z: 220,
-                    name: "Apartment 3B",
-                    expense: "Rent Split",
+                    name: "Bored Ape #1234",
+                    type: "NFT Acquisition",
+                    icon: <ImageIcon className="w-3 h-3" />
                   },
                   {
                     pos: { top: "30%", left: "75%" },
                     z: 150,
-                    name: "Project Titan",
-                    expense: "Contractor Payout",
+                    name: "AI Dev Collective",
+                    type: "GPU Cloud Access",
+                    icon: <Cpu className="w-3 h-3" />
                   },
                   {
                     pos: { top: "70%", left: "10%" },
                     z: 200,
-                    name: "Vacation Fund",
-                    expense: "Flight Booking",
+                    name: "ETH Staking Pool",
+                    type: "Validator Rewards",
+                    icon: <Landmark className="w-3 h-3" />
                   },
                 ].map((node, i) => (
                   <motion.div
@@ -201,10 +204,11 @@ export default function Hero() {
                       <div className="flex -space-x-2">
                         <div className="w-5 h-5 rounded-full bg-muted border-2 border-card" />
                         <div className="w-5 h-5 rounded-full bg-muted border-2 border-card" />
+                        <div className="w-5 h-5 rounded-full bg-muted border-2 border-card" />
                       </div>
                       <div className="text-xs text-secondary flex items-center gap-1">
-                        <Receipt className="w-3 h-3" />
-                        <span>{node.expense}</span>
+                        {node.icon}
+                        <span>{node.type}</span>
                       </div>
                     </div>
                   </motion.div>
@@ -219,16 +223,16 @@ export default function Hero() {
                   transition={{ delay: 1.8 }}
                 >
                   <p className="text-xs text-secondary mb-2">
-                    Live Transactions
+                    Live Bond Activity
                   </p>
                   <div className="space-y-2 text-xs">
                     <p className="flex items-center">
                       <Receipt className="w-3 h-3 mr-2 text-primary" />
-                      Rent Payment Received
+                      Contribution to Ape #1234
                     </p>
                     <p className="flex items-center">
                       <Receipt className="w-3 h-3 mr-2 text-primary" />
-                      Utility Bill Split
+                      Staking Rewards Distributed
                     </p>
                   </div>
                 </motion.div>
@@ -279,7 +283,6 @@ export default function Hero() {
                         fill="var(--primary)"
                         style={{
                           offsetPath: `path('${line.path}')`,
-                          // FIX: Move offsetDistance to style object
                           offsetDistance: "0%",
                         }}
                         animate={{

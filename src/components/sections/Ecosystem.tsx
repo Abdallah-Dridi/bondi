@@ -1,92 +1,124 @@
 "use client";
 import { AnimatePresence, motion } from 'framer-motion';
 import { useState } from 'react';
-import { Layers, ShieldCheck, Vote, CheckCircle } from 'lucide-react';
+import { Layers, ShieldCheck, Vote, CheckCircle, Cpu, ImageIcon, Landmark } from 'lucide-react';
 
 const ecosystemPillars = [
   {
-    icon: <Layers />,
-    title: "Utility",
-    description: "The BONDI token is the native asset that powers the entire ecosystem, used for unlocking features and facilitating value transfer.",
+    icon: <ShieldCheck />,
+    title: "Core Protocol",
+    description: "The secure, audited smart contract foundation that powers every Bond. It handles fund pooling, asset acquisition, and transaction execution with complete transparency.",
     details: [
-      "Access premium group features and tools.",
-      "Use as a medium for instant, low-cost settlements.",
-      "Required for creating and participating in large-scale Bonds."
+      "Non-custodial vaults ensure user funds are always secure.",
+      "Immutable ledger for a transparent history of all actions.",
+      "Gas-optimized for efficient and low-cost operations."
     ],
     visual: () => (
-      <div className="w-full h-full flex items-center justify-center p-4">
+      <div className="w-full h-full grid place-items-center p-4 relative">
         <motion.div
-          className="w-48 h-64 bg-card rounded-xl border border-border p-4"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
+          className="w-48 h-48 border-2 border-primary/50 rounded-full"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1, rotate: 360 }}
+          transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+        />
+        <motion.div
+          className="absolute w-32 h-32 border-2 border-primary/30 rounded-full"
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1, rotate: -360 }}
+          transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
+        />
+        <motion.div
+            initial={{scale: 0}}
+            animate={{scale: 1}}
+            transition={{delay: 0.2}}
         >
-          <div className="w-full h-24 bg-muted rounded-md mb-3" />
-          <div className="h-4 bg-muted rounded w-3/4 mb-2" />
-          <div className="h-3 bg-muted rounded w-1/2" />
+            <ShieldCheck className="w-16 h-16 text-primary absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         </motion.div>
       </div>
     )
   },
   {
-    icon: <ShieldCheck />,
-    title: "Staking",
-    description: "Secure the network and earn rewards by staking your BONDI tokens. Stakers receive a share of the protocol's revenue.",
+    icon: <Layers />,
+    title: "Asset Abstraction",
+    description: "Bondi is asset-agnostic. Our flexible protocol can wrap and fractionalize any asset, from digital NFTs and software licenses to tokenized real-world items.",
     details: [
-      "Earn real yield from protocol-generated fees.",
-      "Help secure the network and validate transactions.",
-      "Gain eligibility for future airdrops and rewards."
+      "Onboard a diverse range of digital and physical assets.",
+      "Standardized interface for managing different asset types.",
+      "Future-proof design to support new asset classes."
     ],
     visual: () => (
-      <div className="w-full h-full flex items-center justify-center p-4 relative">
-        <motion.div
-          className="w-48 h-48 border-2 border-primary/50 rounded-full"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-        />
-        <motion.div
-          className="absolute w-2 h-2 bg-primary rounded-full"
-          animate={{
-            offset: [0, 1],
-            pathLength: [0, 1],
-            path: `M 120, 20 A 100 100, 0, 1, 1, 120, 220 A 100 100, 0, 1, 1, 120, 20`
-          }}
-          transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-        />
-        <ShieldCheck className="w-16 h-16 text-primary absolute" />
+      <div className="w-full h-full grid place-items-center p-4 relative">
+        <div className="relative w-48 h-48">
+          {[
+            { icon: <ImageIcon className="size-6" />, angle: 0 },
+            { icon: <Cpu className="size-6" />, angle: 120 },
+            { icon: <Landmark className="size-6" />, angle: 240 },
+          ].map((item, i) => {
+            const angleRad = item.angle * (Math.PI / 180);
+            return (
+              <motion.div
+                key={i}
+                className="absolute top-1/2 left-1/2 w-16 h-16 bg-card border border-border rounded-full flex items-center justify-center"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  x: `calc(-50% + ${60 * Math.cos(angleRad)}px)`,
+                  y: `calc(-50% + ${60 * Math.sin(angleRad)}px)`,
+                }}
+                transition={{ delay: 0.4 + i * 0.2, type: 'spring' }}
+              >
+                {item.icon}
+              </motion.div>
+            )
+          })}
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <Layers className="size-10 text-primary" />
+          </motion.div>
+        </div>
       </div>
     )
   },
   {
     icon: <Vote />,
-    title: "Governance",
-    description: "Shape the future of Bondi. Staked tokens grant voting rights, allowing you to participate in key protocol decisions.",
+    title: "Group Governance",
+    description: "Each Bond is a decentralized autonomous organization (DAO). Fractional owners vote on key decisions, ensuring the group's interests are always represented.",
     details: [
-      "Vote on protocol upgrades and new feature integrations.",
-      "Participate in treasury management and fund allocation.",
-      "Submit your own proposals for community consideration."
+      "Vote on proposals like selling an asset or distributing profits.",
+      "Voting power is proportional to ownership stake.",
+      "Automated execution of passed proposals via smart contract."
     ],
     visual: () => (
-      <div className="w-full h-full p-6 flex flex-col justify-center gap-4">
-        {[ "Adjust Fee Structure", "Integrate New Chain", "Community Grant"].map((proposal, i) => (
-          <motion.div
-            key={i}
-            className="flex items-center justify-between gap-4 p-3 bg-card rounded-lg"
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: i * 0.2 }}
-          >
-            <span className="text-foreground text-sm">{proposal}</span>
-            <div className="w-16 h-6 bg-muted rounded-full"/>
-          </motion.div>
-        ))}
+      <div className="w-full h-full p-6 grid place-items-center">
+        <div className="w-full max-w-sm space-y-3">
+            {[ "Sell NFT for 25 ETH?", "Upgrade GPU Instance", "Lease Real Estate"].map((proposal, i) => (
+              <motion.div
+                key={i}
+                className="flex items-center justify-between gap-4 p-3 bg-card rounded-lg"
+                initial={{ x: -20, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                transition={{ delay: i * 0.2 }}
+              >
+                <span className="text-foreground text-sm">{proposal}</span>
+                <div className="flex gap-2">
+                    <div className="w-8 h-6 bg-green-500/20 rounded-md"/>
+                    <div className="w-8 h-6 bg-red-500/20 rounded-md"/>
+                </div>
+              </motion.div>
+            ))}
+        </div>
       </div>
     )
   }
 ];
 
 export default function Ecosystem() {
-  const [activePillar, setActivePillar] = useState(1); // Default to Staking
+  const [activePillar, setActivePillar] = useState(0);
 
   return (
     <section id="ecosystem" className="py-32 px-6 relative bg-card/20">
@@ -98,7 +130,7 @@ export default function Ecosystem() {
             viewport={{ once: true }}
             className="font-display text-5xl md:text-6xl font-semibold mb-6"
           >
-            The Bondi Ecosystem
+            A Composable Platform
           </motion.h2>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -107,8 +139,7 @@ export default function Ecosystem() {
             transition={{ delay: 0.1 }}
             className="text-xl text-secondary max-w-3xl mx-auto"
           >
-            A self-sustaining economic flywheel where utility, staking, and
-            governance work in concert to create long-term value.
+            Three core pillars work in concert to provide a flexible, secure, and decentralized framework for group ownership of any asset.
           </motion.p>
         </div>
 
@@ -123,7 +154,7 @@ export default function Ecosystem() {
               transition={{ duration: 0.7, delay: 0.2 }}
             >
               {/* Connecting Lines */}
-              <svg className="absolute inset-0 w-full h-full" fill="none">
+              <svg className="absolute inset-0 w-full h-full" fill="none" viewBox="0 0 500 500">
                 <motion.path
                   d="M 250 100 A 150 150 0 1 1 100 250"
                   stroke="var(--border)"
@@ -136,8 +167,8 @@ export default function Ecosystem() {
                   strokeWidth="1"
                   strokeDasharray="4 4"
                 />
-                <motion.path
-                  d="M 100 250 A 150 150 0 1 1 250 400"
+                 <motion.path
+                  d="M 100 250 L 400 250"
                   stroke="var(--border)"
                   strokeWidth="1"
                   strokeDasharray="4 4"
@@ -146,10 +177,12 @@ export default function Ecosystem() {
 
               {/* Pillar Nodes */}
               {ecosystemPillars.map((pillar, index) => {
-                // Pre-calculate positions with fixed precision
-                const angle = (index * 2 * Math.PI) / 3;
-                const top = 50 + 40 * Math.sin(angle);
-                const left = 50 + 40 * Math.cos(angle);
+                const positions = [
+                    { top: '15%', left: '50%' },
+                    { top: '75%', left: '20%' },
+                    { top: '75%', left: '80%' }
+                ];
+                const pos = positions[index];
 
                 return (
                   <motion.div
@@ -157,21 +190,21 @@ export default function Ecosystem() {
                     className="absolute w-40 h-40"
                     onHoverStart={() => setActivePillar(index)}
                     style={{
-                      top: `${top.toFixed(2)}%`, // Fixed precision
-                      left: `${left.toFixed(2)}%`, // Fixed precision
+                      top: pos.top,
+                      left: pos.left,
                       translateX: "-50%",
                       translateY: "-50%",
                     }}
                   >
                     <div
-                      className={`w-full h-full rounded-full flex flex-col items-center justify-center text-center p-4 transition-all duration-300 ${
+                      className={`w-full h-full rounded-full flex flex-col items-center justify-center text-center p-4 transition-all duration-300 cursor-pointer ${
                         activePillar === index
-                          ? "bg-card border-2 border-primary shadow-2xl"
+                          ? "bg-card border-2 border-primary shadow-2xl scale-110"
                           : "bg-card/50 border border-border"
                       }`}
                     >
                       <div
-                        className={`p-3 rounded-lg mb-2 ${
+                        className={`p-3 rounded-lg mb-2 transition-colors ${
                           activePillar === index
                             ? "text-primary"
                             : "text-secondary"
@@ -211,13 +244,16 @@ export default function Ecosystem() {
                     <div className="space-y-3">
                       {ecosystemPillars[activePillar].details.map(
                         (detail, i) => (
-                          <div
+                          <motion.div
                             key={i}
                             className="flex items-start gap-3 text-base"
+                            initial={{opacity: 0, x: -10}}
+                            animate={{opacity: 1, x: 0}}
+                            transition={{delay: 0.2 + i * 0.1}}
                           >
                             <CheckCircle className="w-5 h-5 mt-1 text-primary flex-shrink-0" />
                             <span className="text-secondary">{detail}</span>
-                          </div>
+                          </motion.div>
                         )
                       )}
                     </div>

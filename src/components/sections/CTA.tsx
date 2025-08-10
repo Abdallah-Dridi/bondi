@@ -25,7 +25,7 @@ export default function CTA() {
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
         >
-          Join the New Economy
+          Unlock Collective Ownership
         </motion.h2>
 
         <motion.p
@@ -35,7 +35,7 @@ export default function CTA() {
           viewport={{ once: true }}
           transition={{ delay: 0.3 }}
         >
-          Step into a more transparent, efficient, and collaborative financial future. Whether you&apos;re a developer, a user, or a visionary, your journey with Bondi starts now.
+          Ready to co-own blue-chip NFTs, high-end hardware, or tokenized real estate? Explore active Bonds or create your own. The future of group investment is here.
         </motion.p>
 
         <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
@@ -47,7 +47,7 @@ export default function CTA() {
             transition={{ delay: 0.4 }}
           >
             <span className="flex items-center justify-center space-x-2">
-              <span>Launch dApp</span>
+              <span>Explore Bonds</span>
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </span>
           </motion.button>
