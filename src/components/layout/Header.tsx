@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 
 const navLinks = [
-  { href: "#features", label: "Features" },
-  { href: "#how-it-works", label: "How It Works" },
-  { href: "#ecosystem", label: "Ecosystem" },
-  { href: "#testimonials", label: "Testimonials" },
+  { href: "/#features", label: "Features" },
+  { href: "/#how-it-works", label: "How It Works" },
+  { href: "/#ecosystem", label: "Ecosystem" },
+  { href: "/#testimonials", label: "Testimonials" },
 ];
 
 export default function Header() {
@@ -57,8 +57,8 @@ export default function Header() {
             
             {/* CTA Button */}
             <div className="flex items-center space-x-4">
-              <button className="px-6 py-2 rounded-lg bg-primary text-background font-semibold glow-hover">
-                Launch App
+              <button  className="px-6 py-2 rounded-lg bg-primary text-background font-semibold glow-hover" >
+                <a href="/dApp">Launch App</a> 
               </button>
             </div>
           </div>

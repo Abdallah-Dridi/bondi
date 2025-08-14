@@ -2,6 +2,7 @@
 import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { Share2, Receipt, Cpu, ImageIcon, Landmark } from 'lucide-react';
 import { useRef } from 'react';
+import Link from 'next/link';
 
 // A more detailed component for the rotating protocol core
 const ProtocolCore = () => (
@@ -107,14 +108,17 @@ export default function Hero() {
               transition={{ delay: 0.6 }}
               className="flex flex-wrap gap-4 justify-center lg:justify-start"
             >
-              <button className="px-8 py-4 rounded-lg bg-primary text-background font-semibold text-lg glow-hover group">
+               <Link
+                href="/dApp"
+                className="px-8 py-4 rounded-lg bg-primary text-background font-semibold text-lg glow-hover group"
+              >
                 <span className="flex items-center">
                   <span>Explore Bonds</span>
                   <span className="ml-2 group-hover:translate-x-1 transition-transform">
                     ↗
                   </span>
                 </span>
-              </button>
+              </Link>
             </motion.div>
           </div>
 
